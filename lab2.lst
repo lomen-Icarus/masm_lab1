@@ -1,0 +1,114 @@
+Microsoft (R) Macro Assembler Version 14.44.35229.0	    09/23/26 10:50:40
+lab2.asm						     Page 1 - 1
+
+
+				.586
+				.model flat, stdcall
+				.stack 4096
+
+				ExitProcess PROTO, dwExitCode:DWORD
+
+ 00000000			.data
+ 00000000 00000002		valA DD 2
+ 00000004 00000003		valB DD 3
+ 00000008 00000002		valC DD 2
+ 0000000C 00000014		valD DD 20
+ 00000010 00000003		valX DD 3
+ 00000014 00000000		Y    DD ?
+
+ 00000000			.code
+ 00000000			main:
+ 00000000  A1 00000010 R	  mov eax, valX
+ 00000005  83 F8 FE		  cmp eax, -2
+ 00000008  7F 04		  jg  branch1
+ 0000000A  74 35		  je  branch2
+ 0000000C  7C 55		  jl  branch3
+
+ 0000000E			branch1:
+ 0000000E  A1 00000008 R	  mov eax, valC
+ 00000013  0F AF 05		  imul eax, valC
+	   00000008 R
+ 0000001A  0F AF 05		  imul eax, valC
+	   00000008 R
+ 00000021  0F AF 05		  imul eax, valX
+	   00000010 R
+ 00000028  8B C8		  mov ecx, eax
+ 0000002A  A1 00000004 R	  mov eax, valB
+ 0000002F  99			  cdq
+ 00000030  BB 00000002		  mov ebx, 2
+ 00000035  F7 FB		  idiv ebx
+ 00000037  2B CA		  sub ecx, edx
+ 00000039  89 0D 00000014 R	  mov Y, ecx
+ 0000003F  EB 39		  jmp finish
+
+ 00000041			branch2:
+ 00000041  A1 00000010 R	  mov eax, valX
+ 00000046  0F AF 05		  imul eax, valX
+	   00000010 R
+ 0000004D  8B 0D 00000000 R	  mov ecx, valA
+ 00000053  0F AF 0D		  imul ecx, valD
+	   0000000C R
+ 0000005A  03 C1		  add eax, ecx
+ 0000005C  A3 00000014 R	  mov Y, eax
+ 00000061  EB 17		  jmp finish
+
+ 00000063			branch3:
+ 00000063  A1 00000010 R	  mov eax, valX
+ 00000068  0F AF 05		  imul eax, valB
+	   00000004 R
+ 0000006F  03 05 0000000C R	  add eax, valD
+ 00000075  A3 00000014 R	  mov Y, eax
+
+ 0000007A			finish:
+				  INVOKE ExitProcess, Y
+				END main
+Microsoft (R) Macro Assembler Version 14.44.35229.0	    09/23/26 10:50:40
+lab2.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000018 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000085 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+Y  . . . . . . . . . . . . . . .	DWord	 00000014 _DATA	
+branch1  . . . . . . . . . . . .	L Near	 0000000E _TEXT	
+branch2  . . . . . . . . . . . .	L Near	 00000041 _TEXT	
+branch3  . . . . . . . . . . . .	L Near	 00000063 _TEXT	
+finish . . . . . . . . . . . . .	L Near	 0000007A _TEXT	
+main . . . . . . . . . . . . . .	L Near	 00000000 _TEXT	Public STDCALL
+valA . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+valB . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+valC . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+valD . . . . . . . . . . . . . .	DWord	 0000000C _DATA	
+valX . . . . . . . . . . . . . .	DWord	 00000010 _DATA	
+
+	   0 Warnings
+	   0 Errors
